@@ -4,7 +4,9 @@
 //global variable
 static int id=1111;
 static int namberTask=0;
-
+void testIdentifiant(){
+	FILE *identifiant;
+}
 //struct
 typedef struct {
 	int day;
@@ -19,11 +21,23 @@ typedef struct {
 	Date deadline;
 }Task;
 Task task[200];
-void menu2(){
-	printf("__________________________________________\n");
-	printf("|                                         |\n");
-	printf("|  Option 1 : back                        |\n");   
-	printf("|_________________________________________|\n");
+int menu2(){
+	char option[1];
+	int optionInt;
+	do{
+		printf("_________________________________________________________\n");
+		printf("|                                                       |\n");
+		printf("|  Option 1 : View list of all tasks                    |\n");  
+		printf("|  Option 2 : Sort tasks alphabetically                 |\n"); 
+		printf("|  Option 3 : Sort tasks by deadline                    |\n"); 
+		printf("|  Option 4 : tasks whose deadline is in 3 days or less.|\n");
+		printf("|  Option 5 : back                                      |\n");  
+		printf("|_______________________________________________________|\n");
+		printf("\noption : ");
+		gets(option);
+		optionInt = strtol(option, NULL, 10);
+	}while(optionInt<1 || optionInt>5);
+	return optionInt;
 }
 Task newTask(){
 	task[namberTask].identifier=id;
@@ -66,6 +80,7 @@ void ShowTasks(){
 }
 //function
 void menu(){
+	
 	printf("__________________________________________\n");
 	printf("|                                         |\n");
 	printf("|  Option 1 : Add a new task              |\n");
@@ -91,12 +106,16 @@ int main(){
 		switch (optionInt){
 			case 1 : newTask(); break;
 			case 2 : newmultipleTask(); break;
-			case 3 : ShowTasks(); break;
-			case 4 : newTask(); break;
-			case 5 : newTask(); break;
-			case 6 : newTask(); break;
-			case 7 : newTask(); break;
-			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
+			case 3 : {
+						int searchType=menu2();
+						system("CLS");
+						if(searchType==1) printf("ok 1\n");
+						if(searchType==2) printf("ok 2\n");
+						if(searchType==3) printf("ok 3\n");
+						if(searchType==4) printf("ok 4\n");
+					}; break;
+			//case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
+			default: break;
 		}
 	}while(optionInt!=8);
 	
