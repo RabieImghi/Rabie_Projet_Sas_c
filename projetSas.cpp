@@ -5,7 +5,7 @@
 static int id=1111;
 static int namberTask=0;
 int showMenu=1;
-//struct
+
 typedef struct {
 	int day;
 	int hour;
@@ -58,7 +58,7 @@ void ShowTasks(){
 	printf("******************************************\n");
 	}
 }
-void  showTaskTrieAlphabity(){
+void showTaskTrieAlphabity(){
 	for(int i=0;i<namberTask-1;i++)
 		for(int j=i+1;j<namberTask;j++){
 			if(strcmp(task[i].title,task[j].title)>0){
@@ -69,7 +69,17 @@ void  showTaskTrieAlphabity(){
 		}
 	ShowTasks();
 }
-//function
+void showTaskTrieDeadLine(){
+	for(int i=0;i<namberTask-1;i++)
+		for(int j=i+1;j<namberTask;j++){
+			if(task[i].deadline.day>task[j].deadline.day){
+				Task temp=task[i];
+				task[i]=task[j];
+				task[j]=temp;
+			}
+		}
+	ShowTasks();
+}
 void menu(){
 	
 	printf("__________________________________________\n");
@@ -115,14 +125,16 @@ int main(){
 							gets(option);
 							optionInt = strtol(option, NULL, 10);
 							system("CLS");
+							//View list of all tasks by alphabity***********************************
 							if(optionInt==1){
-								 showTaskTrieAlphabity()
-							}else if(optionInt==3){
-								printf("ok 3\n");
+								 showTaskTrieAlphabity();
+							}
+							//View list of all tasks by deadline***********************************
+							if(optionInt==2){
+								showTaskTrieDeadLine();
 							}
 						}while(optionInt!=4);
 						showMenu=1;
-						
 					 	break;
 			//case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
