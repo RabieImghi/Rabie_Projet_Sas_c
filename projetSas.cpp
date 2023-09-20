@@ -28,28 +28,40 @@ void menu2(){
 Task newTask(){
 	task[namberTask].identifier=id;
 	printf("Give me the task information : \n");
-	printf("Give me task title : ");
+	printf("Give me task %d title : ");
 	gets(task[namberTask].title);
-	printf("Give me task description : ");
+	printf("Give me task %d description : ");
 	gets(task[namberTask].description);
-	printf("Give me Deadline of the task : \n");
-	printf("Day of task : ");
+	printf("Give me Deadline of the task %d : \n");
+	printf("Day of task %d: ");
 	scanf("%d",&task[namberTask].deadline.day);
-	printf("Month of task : ");
+	printf("Month of task %d: ");
 	scanf("%d",&task[namberTask].deadline.month);
-	printf("Year of task : ");
+	printf("Year of task %d: ");
 	scanf("%d",&task[namberTask].deadline.year);
 	namberTask++;
 	id++;
 	
 }
+void newmultipleTask(){
+	int nbTask;
+	printf("Give me number of task you want : ");
+	scanf("%d",&nbTask);
+	char fakeOption[1];
+	gets(fakeOption);
+	for(int i=0;i<nbTask;i++){
+		newTask();
+		gets(fakeOption);
+	}
+}
 void ShowTasks(){
-	printf("************Task Information ************\n");
+	printf("************Task Information *************\n");
 	for(int i=0;i<namberTask;i++){
-	printf("*  TASK %d Title : %s\n",i+1,task[i].title);
-	printf("*  TASK %d \nIDENTIFIER : %d \nTitle : %s\n",i+1,task[i].identifier,task[i].title);
-	printf("DESCRIPTION : %s\n",task[i].description);
-	printf("DEADLINE : %d/%d/%d\n",task[i].deadline.day,task[i].deadline.month,task[i].deadline.year);
+	printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
+	printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
+	printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
+	printf("*  TASK %d DEADLINE    : %d/%d/%d\n",i+1,task[i].deadline.day,task[i].deadline.month,task[i].deadline.year);
+	printf("******************************************\n");
 	}
 }
 //function
@@ -78,7 +90,7 @@ int main(){
 		optionInt = strtol(option, NULL, 10);
 		switch (optionInt){
 			case 1 : newTask(); break;
-			case 2 : newTask(); break;
+			case 2 : newmultipleTask(); break;
 			case 3 : ShowTasks(); break;
 			case 4 : newTask(); break;
 			case 5 : newTask(); break;
