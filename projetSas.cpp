@@ -92,6 +92,19 @@ void showTaskTrieDeadLine(){
 		}
 	ShowTasks();
 }
+void showTaskTrieDeadLine2(){
+	int taskId[200];
+	for(int i=0;i<namberTask-1;i++)
+		if((task[i].deadline.day<3 )||(task[i].deadline.day==3 && task[i].deadline.hour<1)||(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
+				printf("************Task Information *************\n");
+				printf("*  TASK %d IDENTIFIER  : %d\n",i,task[i].identifier);
+				printf("*  TASK %d Title       : %s\n",i,task[i].title);
+				printf("*  TASK %d DESCRIPTION : %s\n",i,task[i].description);
+				printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
+				printf("******************************************\n");		
+		}
+		
+}
 void menu(){
 	
 	printf("__________________________________________\n");
@@ -140,14 +153,39 @@ int main(){
 							//View list of all tasks by alphabity***********************************
 							if(optionInt==1){
 								 showTaskTrieAlphabity();
-							}
-							//View list of all tasks by deadline***********************************
+							}else
+							//View list of all tasks by deadline************************************
 							if(optionInt==2){
 								showTaskTrieDeadLine();
+							}else
+							//View list of all tasks by deadline 3day left**************************
+							if(optionInt==3){
+								showTaskTrieDeadLine2();
 							}
 						}while(optionInt!=4);
 						showMenu=1;
 					 	break;
+					 	
+//Edit tasks****************************************************************************
+			case 4 : showMenu=0; 
+					  	char option[1];
+						int optionInt;
+						do{
+							printf("_________________________________________________________\n");
+							printf("|                                                       |\n");
+							printf("|  Option 1 : Edit the description of a task            |\n"); 
+							printf("|  Option 2 : Change the status of a task               |\n"); 
+							printf("|  Option 3 : Change the deadline for a task  			|\n");
+							printf("|  Option 4 : back                                      |\n");  
+							printf("|_______________________________________________________|\n");
+							printf("\noption : ");
+							gets(option);
+							optionInt = strtol(option, NULL, 10);
+							system("CLS");
+							//View list of all tasks by alphabity***********************************
+							
+						}while(optionInt!=4);
+						showMenu=1;; break;
 			//case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
