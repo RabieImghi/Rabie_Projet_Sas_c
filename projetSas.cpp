@@ -26,7 +26,7 @@ Task newTask(){
 	gets(task[namberTask].title);
 	printf("Give me task %d description : ",namberTask+1);
 	gets(task[namberTask].description);
-	printf("Give me Deadline of the task %d : \n");
+	printf("Give me Deadline of the task %d : \n",namberTask+1);
 	printf("Day of task %d: ",namberTask+1);
 	scanf("%d",&task[namberTask].deadline.day);
 	printf("Hour of task %d: ",namberTask+1);
@@ -152,7 +152,7 @@ void editTaskDeadLine(){
 	gets(fake);							
 	for(int i=0;i<namberTask;i++){							
 		if(task[i].identifier==tasknumEdit){								
-			printf("Give me new DeadLine : ");								
+			printf("Give me new DeadLine : \n");								
 				printf("Day of task : ");
 				scanf("%d",&task[i].deadline.day);
 				printf("Hour of task : ");
@@ -161,6 +161,24 @@ void editTaskDeadLine(){
 				scanf("%d",&task[i].deadline.minut);
 		}														
 	}
+}
+void delitTask(){
+	char fake[1];
+	int tasknumEdit;
+	ShowTasks();							
+	printf("select a task by identifier : ");							
+	scanf("%d",&tasknumEdit);							
+	gets(fake);							
+	for(int i=0;i<namberTask;i++)							
+		if(task[i].identifier==tasknumEdit){
+			for(int j=i+1;j<namberTask-1;j++){
+				Task temp=task[i];
+				task[i]=task[j];
+				task[j]=temp;
+			}
+			break;	
+		}
+		namberTask--;
 }
 void menu(){
 	
@@ -220,8 +238,8 @@ int main(){
 								showTaskTrieDeadLine2();
 							}
 						}while(optionInt!=4);
-						showMenu=1;
-					 	break;
+							showMenu=1;
+					 		break;
 					 	
 //Edit tasks****************************************************************************
 			case 4 : showMenu=0; 
@@ -249,6 +267,7 @@ int main(){
 								ShowTasks();
 						}while(optionInt!=5);
 						showMenu=1; break;
+			case 5 : delitTask(); break;
 			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
