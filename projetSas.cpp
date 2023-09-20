@@ -143,7 +143,25 @@ void editTaskStatus(){
 		}														
 	}												
 }
-
+void editTaskDeadLine(){
+	char Status[20],fake[1];
+	int tasknumEdit;
+	ShowTasks();							
+	printf("select a task by identifier : ");							
+	scanf("%d",&tasknumEdit);							
+	gets(fake);							
+	for(int i=0;i<namberTask;i++){							
+		if(task[i].identifier==tasknumEdit){								
+			printf("Give me new DeadLine : ");								
+				printf("Day of task : ");
+				scanf("%d",&task[i].deadline.day);
+				printf("Hour of task : ");
+				scanf("%d",&task[i].deadline.hour);
+				printf("Minut of task : ");
+				scanf("%d",&task[i].deadline.minut);
+		}														
+	}
+}
 void menu(){
 	
 	printf("__________________________________________\n");
@@ -225,6 +243,9 @@ int main(){
 								editTaskDescription();
 							else if(optionInt==2)
 								editTaskStatus();
+							else if(optionInt==3)
+								editTaskDeadLine();
+							else if(optionInt==4)
 								ShowTasks();
 						}while(optionInt!=5);
 						showMenu=1; break;
