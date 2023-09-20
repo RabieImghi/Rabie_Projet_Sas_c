@@ -122,6 +122,27 @@ void editTaskDescription(){
 		}														
 	}												
 }
+void editTaskStatus(){
+	char Status[20],fake[1];
+	int tasknumEdit;
+	ShowTasks();							
+	printf("select a task by identifier : ");							
+	scanf("%d",&tasknumEdit);							
+	gets(fake);							
+	for(int i=0;i<namberTask;i++){							
+		if(task[i].identifier==tasknumEdit){								
+			printf("Give me new Status (0 for 'a realize' // 1 for 'in progress' // 2 for 'finalized') ");								
+			gets(Status);
+			if(strtol(Status,NULL,10)==0)
+				strcpy(task[i].Status, "a realize");
+			else if(strtol(Status,NULL,10)==1)
+				strcpy(task[i].Status, "in progress");
+			else if(strtol(Status,NULL,10)==2)							
+				strcpy(task[i].Status, "finalized");
+			else printf("INCORRECT SELECTION");
+		}														
+	}												
+}
 
 void menu(){
 	
@@ -202,8 +223,8 @@ int main(){
 							//Edit the description of a task***********************************
 							if(optionInt==1)
 								editTaskDescription();
-							
-							else if(optionInt==4)
+							else if(optionInt==2)
+								editTaskStatus();
 								ShowTasks();
 						}while(optionInt!=5);
 						showMenu=1; break;
