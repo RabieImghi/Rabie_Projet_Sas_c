@@ -54,6 +54,7 @@ void ShowTasks(){
 	printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
 	printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
 	printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
+	printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
 	printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
 	printf("******************************************\n");
 	}
@@ -100,11 +101,28 @@ void showTaskTrieDeadLine2(){
 				printf("*  TASK %d IDENTIFIER  : %d\n",i,task[i].identifier);
 				printf("*  TASK %d Title       : %s\n",i,task[i].title);
 				printf("*  TASK %d DESCRIPTION : %s\n",i,task[i].description);
+				printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
 				printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
 				printf("******************************************\n");		
 		}
 		
 }
+void editTaskDescription(){
+	char desciption[20],fake[1];
+	int tasknumEdit;
+	ShowTasks();							
+	printf("select a task by identifier : ");							
+	scanf("%d",&tasknumEdit);							
+	gets(fake);							
+	for(int i=0;i<namberTask;i++){							
+		if(task[i].identifier==tasknumEdit){								
+			printf("Give me new description");								
+			gets(desciption);								
+			strcpy(task[i].description, desciption);
+		}														
+	}												
+}
+
 void menu(){
 	
 	printf("__________________________________________\n");
@@ -168,25 +186,28 @@ int main(){
 					 	
 //Edit tasks****************************************************************************
 			case 4 : showMenu=0; 
-					  	char option[1];
-						int optionInt;
 						do{
 							printf("_________________________________________________________\n");
 							printf("|                                                       |\n");
 							printf("|  Option 1 : Edit the description of a task            |\n"); 
 							printf("|  Option 2 : Change the status of a task               |\n"); 
-							printf("|  Option 3 : Change the deadline for a task  			|\n");
-							printf("|  Option 4 : back                                      |\n");  
+							printf("|  Option 3 : Change the deadline for a task            |\n");
+							printf("|  Option 4 : Show all task                             |\n");
+							printf("|  Option 5 : back                                      |\n");  
 							printf("|_______________________________________________________|\n");
 							printf("\noption : ");
 							gets(option);
 							optionInt = strtol(option, NULL, 10);
 							system("CLS");
-							//View list of all tasks by alphabity***********************************
+							//Edit the description of a task***********************************
+							if(optionInt==1)
+								editTaskDescription();
 							
-						}while(optionInt!=4);
-						showMenu=1;; break;
-			//case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
+							else if(optionInt==4)
+								ShowTasks();
+						}while(optionInt!=5);
+						showMenu=1; break;
+			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
 	}while(optionInt!=8);
