@@ -76,6 +76,18 @@ void showTaskTrieDeadLine(){
 				Task temp=task[i];
 				task[i]=task[j];
 				task[j]=temp;
+			}else if(task[i].deadline.day==task[j].deadline.day){
+				if(task[i].deadline.hour>task[j].deadline.hour){
+					Task temp=task[i];
+					task[i]=task[j];
+					task[j]=temp;
+				}else if(task[i].deadline.hour==task[j].deadline.hour){
+					if(task[i].deadline.minut>task[j].deadline.minut){
+						Task temp=task[i];
+						task[i]=task[j];
+						task[j]=temp;
+					}
+				}
 			}
 		}
 	ShowTasks();
