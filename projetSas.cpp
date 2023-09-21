@@ -135,7 +135,7 @@ void editTaskStatus(){
 			printf("Give me new Status (0 for 'a realize' // 1 for 'in progress' // 2 for 'finalized') ");								
 			gets(Status);
 			if(strtol(Status,NULL,10)==0)
-				strcpy(task[i].Status, "a realize");
+				strcpy(task[i].Status, "realize");
 			else if(strtol(Status,NULL,10)==1)
 				strcpy(task[i].Status, "in progress");
 			else if(strtol(Status,NULL,10)==2)							
@@ -215,7 +215,7 @@ void SearchTaskByTitle(){
 			break;
 		}
 }
-showCompletTask(){
+void showCompletTask(){
 	printf("************Complete Task Information *************\n");
 	for(int i=0;i<namberTask;i++)
 		if(strcmp(task[i].Status,"finalized")==0){
@@ -227,7 +227,18 @@ showCompletTask(){
 		printf("******************************************\n");
 	}
 }
-
+void showInCompletTask(){
+	printf("************Incomplete Task Information *************\n");
+	for(int i=0;i<namberTask;i++)
+		if(strcmp(task[i].Status,"finalized")==1){
+		printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
+		printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
+		printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
+		printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
+		printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
+		printf("******************************************\n");
+	}
+}
 void menu(){
 	
 	printf("__________________________________________\n");
