@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>//to uper case / lower case
 //global variable
 static int id=1111;
 static int namberTask=0;
@@ -180,7 +181,7 @@ void delitTask(){
 		}
 		namberTask--;
 }
-void SearchTask(){
+void SearchTaskByIdentifiant(){
 	char fake[1];
 	int tasknumEdit;							
 	printf("search a task by identifier : ");							
@@ -195,6 +196,23 @@ void SearchTask(){
 			printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
 			printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
 			printf("******************************************\n");	
+			break;
+		}
+}
+void SearchTaskByTitle(){
+	char tasknumEdit[20];							
+	printf("search a task by Title : ");								
+	gets(tasknumEdit);							
+	for(int i=0;i<namberTask;i++)							
+		if(strcmp(task[i].title,tasknumEdit)==0){
+			printf("************Task Information *************\n");
+			printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
+			printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
+			printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
+			printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
+			printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
+			printf("******************************************\n");	
+			break;
 		}
 }
 void menu(){
@@ -285,7 +303,30 @@ int main(){
 						}while(optionInt!=5);
 						showMenu=1; break;
 			case 5 : delitTask(); break;
-			case 6 : SearchTask(); break;
+			case 6 : showMenu=0; 
+						do{
+							printf("_________________________________________________________\n");
+							printf("|                                                       |\n");
+							printf("|  Option 1 : Search Tasks by identifie                 |\n"); 
+							printf("|  Option 2 : Search Tasks by title                     |\n"); 
+							printf("|  Option 3 : back                                      |\n");  
+							printf("|_______________________________________________________|\n");
+							printf("\noption : ");
+							gets(option);
+							optionInt = strtol(option, NULL, 10);
+							system("CLS");
+							//View list of all tasks by alphabity***********************************
+							if(optionInt==1){
+								SearchTaskByIdentifiant();
+							}else
+							//View list of all tasks by deadline************************************
+							if(optionInt==2){
+								SearchTaskByTitle();
+							}
+						}while(optionInt!=3);
+						showMenu=1;
+					 	break;
+			case 7 :delitTask(); ; break;
 			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
