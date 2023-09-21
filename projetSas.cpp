@@ -13,7 +13,7 @@ typedef struct {
 	int minut;
 }Date;
 typedef struct {
-	int identifier=id;
+	int identifier;
 	char title[20];
 	char description[20];
 	char Status[20]="realize";
@@ -215,6 +215,19 @@ void SearchTaskByTitle(){
 			break;
 		}
 }
+showCompletTask(){
+	printf("************Complete Task Information *************\n");
+	for(int i=0;i<namberTask;i++)
+		if(strcmp(task[i].Status,"finalized")==0){
+		printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
+		printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
+		printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
+		printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
+		printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
+		printf("******************************************\n");
+	}
+}
+
 void menu(){
 	
 	printf("__________________________________________\n");
@@ -241,7 +254,7 @@ int main(){
 		optionInt = strtol(option, NULL, 10);
 		switch (optionInt){
 //Add a new task  **********************************************************************************
-			case 1 : newTask(); break;
+			case 1 : newTask(); printf("succe"); break;
 //Add multiple new tasks  **************************************************************************
 			case 2 : newmultipleTask(); break;
 //View list of all tasks****************************************************************************
@@ -326,7 +339,29 @@ int main(){
 						}while(optionInt!=3);
 						showMenu=1;
 					 	break;
-			case 7 :delitTask(); ; break;
+			case 7 : do{
+							printf("____________________________________________________________________\n");
+							printf("|                                                                  |\n");
+							printf("|  Option 1 : Show the total number of tasks                       |\n"); 
+							printf("|  Option 2 : Show the number of complete tasks                    |\n"); 
+							printf("|  Option 3 : Show the number of incomplete tasks                  |\n");
+							printf("|  Option 4 : Number of days remaining until each task's deadline  |\n");
+							printf("|  Option 5 : back                                                 |\n");  
+							printf("|__________________________________________________________________|\n");
+							printf("\noption : ");
+							gets(option);
+							optionInt = strtol(option, NULL, 10);
+							system("CLS");
+							//Edit the description of a task***********************************
+							if(optionInt==1){
+								printf("________________________________________________\n");
+								printf("|| the total number of tasks is : %d           ||\n",namberTask);
+								printf("||____________________________________________||\n");
+							}else if(optionInt==2)
+								showCompletTask();
+							else if(optionInt==3)
+								showInCompletTask();
+					}while(optionInt!=5) ; system("CLS"); break;
 			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
