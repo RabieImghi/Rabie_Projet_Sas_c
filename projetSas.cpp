@@ -2,17 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-int id=100;//global variable for identifiant task
-int namberTask=0; //global variable for count task
-int showMenu=1; //global variable for test display Menu
+static int id=100;//global variable for identifiant task
+static int namberTask=0; //global variable for count task
 
-
-//struct for date actulle
-typedef struct {
-	int day;
-	int month;
-	int year;
-}DateCreation;
 
 //struct for Deadline
 typedef struct {
@@ -28,14 +20,11 @@ typedef struct {
 	char description[20];
 	char Status[20]="realize";
 	Date deadline;
-	DateCreation DateCreat;
 }Task;
 Task task[200];//global variable for table tasks
 
 //Function Add New Task
 Task newTask(){
-	time_t currentTime = time(NULL);// reurn time en seconde
-	struct tm da = *localtime(&currentTime); // get year and day and month  from currentTime en second
 	task[namberTask].identifier=id;
 	printf("Give me the task information : \n");
 	printf("Give me task %d title : ",namberTask+1);
@@ -49,9 +38,6 @@ Task newTask(){
 	scanf("%d",&task[namberTask].deadline.hour);
 	printf("Minut of task %d: ",namberTask+1);
 	scanf("%d",&task[namberTask].deadline.minut);
-	task[namberTask].DateCreat.day =da.tm_mday;
-	task[namberTask].DateCreat.month =da.tm_mon+1;
-	task[namberTask].DateCreat.year =da.tm_year+1900;
 	namberTask++;
 	id++;	
 }
@@ -76,7 +62,6 @@ void ShowTasks(){
 		for(int i=0;i<namberTask;i++){
 			printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
 			printf("*  TASK %d TITEL       : %s\n",i+1,task[i].title);
-			printf("*  TASK %d DDATE CREAT : %d/%d/%d\n",i+1,task[i].DateCreat.day,task[i].DateCreat.month,task[i].DateCreat.year);
 			printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
 			printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
 			printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
@@ -127,9 +112,7 @@ void showTaskTrieDeadLine(){
 void showTaskTrieDeadLine2(){
 	int taskId[200];
 	for(int i=0;i<namberTask-1;i++)
-		if((task[i].deadline.day<3 )||
-		(task[i].deadline.day==3 && task[i].deadline.hour<1)||
-		(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
+		if((task[i].deadline.day<3 )||(task[i].deadline.day==3 && task[i].deadline.hour<1)||(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
 			printf("************Task Information *************\n");
 			printf("*  TASK %d IDENTIFIER  : %d\n",i,task[i].identifier);
 			printf("*  TASK %d Title       : %s\n",i,task[i].title);
@@ -211,14 +194,12 @@ void delitTask(){
 	gets(fake);							
 	for(int i=0;i<namberTask;i++)							
 		if(task[i].identifier==tasknumEdit){
-			for(int j=i+1;j<namberTask-1;j++){
-				Task temp=task[i];
-				task[i]=task[j];
-				task[j]=temp;
+			for(int j=i;j<namberTask-1;j++){
+				task[j]=task[j+1];
 			}
-			break;	
+			namberTask--;
+			break;
 		}
-		namberTask--;
 }
 
 //Function Search Task By Identifiant 
@@ -261,13 +242,13 @@ void SearchTaskByTitle(){
 
 //Function For Display finalized Tasks
 void showCompletTask(){
-	int compt=0;
 	printf("************Complete Task Information *************\n");
+	int compt=0;
 	for(int i=0;i<namberTask;i++)
 		if(strcmp(task[i].Status,"finalized")==0) compt++;
-		printf("________________________________________________\n");
-		printf("|| the number of complete tasks is : %d      ||\n",compt);
-		printf("||____________________________________________||\n");
+			printf("__________________________________________________\n");
+			printf("|| the total number of tasks complete is : %d     ||\n",compt);
+			printf("||_______________________________________________||\n");
 }
 
 //Function For Display progress/realize Tasks
@@ -276,15 +257,13 @@ void showInCompletTask(){
 	printf("************Incomplete Task Information *************\n");
 	for(int i=0;i<namberTask;i++)
 		if(strcmp(task[i].Status,"finalized")==1) compt++;
-		printf("________________________________________________\n");
-		printf("|| the number of Incomplete tasks is : %d      ||\n",compt);
-		printf("||____________________________________________||\n");
-	
+			printf("__________________________________________________\n");
+			printf("|| the total number of tasks incomplete is : %d   ||\n",compt);
+			printf("||_______________________________________________||\n");
 }
 
 //Function For Display Number Of Day Remaining Of Task
 void NumberOfDaysRemaining(){
-		printf("************ Number Of Day Remaining Of Task Incomplete*************\n");
 	for(int i=0;i<namberTask;i++)
 		if(strcmp(task[i].Status,"finalized")!=0){
 		printf("*  TASK %d IDENTIFIER                 : %d\n",i+1,task[i].identifier);
@@ -310,23 +289,21 @@ void menu(){
 }
 
 int main(){
-	
 	// Option For Test User Selection
 	char option[1];
 	int optionInt;
 	do{
-		if(showMenu==1) menu();// Test Dislpay Menu
+		menu();// Test Dislpay Menu
 		printf("\n********Select An Option From Menu*********\n");
 		printf("\n______________: ");
 		gets(option);
 		system("CLS"); // clear screen
-		optionInt = strtol(option, NULL, 10); //convert a number type char to type int
+		optionInt =atoi(option);//convert a number type char to type int
 		//Switch For Management User Selection  
 		switch (optionInt){
 			case 1 : newTask(); break; 
 			case 2 : newmultipleTask(); break;
-			case 3 : showMenu=0;
-					 char option[1];
+			case 3 : char option[1];
 					 int optionInt;	
 					 do{
 						printf("_________________________________________________________\n");
@@ -338,7 +315,7 @@ int main(){
 						printf("|_______________________________________________________|\n");
 						printf("\noption : ");
 						gets(option);
-						optionInt = strtol(option, NULL, 10);
+						optionInt = atoi(option);
 						system("CLS");
 						//View list of all tasks by alphabity***********************************
 						if(optionInt==1) showTaskTrieAlphabity();
@@ -347,10 +324,8 @@ int main(){
 						//View list of all tasks by deadline 3day left**************************
 						if(optionInt==3) showTaskTrieDeadLine2();
 					 }while(optionInt!=4);
-					 showMenu=1;
 				     break;
-			case 4 : showMenu=0; 
-					 do{
+			case 4 : do{
 						printf("_________________________________________________________\n");
 						printf("|                                                       |\n");
 						printf("|  Option 1 : Edit the description of a task            |\n"); 
@@ -361,7 +336,7 @@ int main(){
 						printf("|_______________________________________________________|\n");
 						printf("\noption : ");
 						gets(option);
-						optionInt = strtol(option, NULL, 10);
+						optionInt = atoi(option);
 						system("CLS");
 						//Edit the description of a task***********************************
 						if(optionInt==1) editTaskDescription();
@@ -371,13 +346,10 @@ int main(){
 						if(optionInt==3) editTaskDeadLine();
 						//Display All task*************************************************
 						if(optionInt==4) ShowTasks();
-					 }while(optionInt!=5);
-					 showMenu=1; 
+					 }while(optionInt!=5); 
 					 break;
-					 
 			case 5 : delitTask(); break; // Delit A Task By Identifiant
-			case 6 : showMenu=0; 
-					 do{
+			case 6 : do{
 				 		printf("_________________________________________________________\n");
 						printf("|                                                       |\n");
 						printf("|  Option 1 : Search Tasks by identifie                 |\n"); 
@@ -386,14 +358,13 @@ int main(){
 						printf("|_______________________________________________________|\n");
 						printf("\noption : ");
 						gets(option);
-						optionInt = strtol(option, NULL, 10);
+						optionInt = atoi(option);
 						system("CLS");
 						//Search A Task Using Identfiant***********************************
 						if(optionInt==1) SearchTaskByIdentifiant();
 						//Search A Task Using deadline*************************************
 						if(optionInt==2) SearchTaskByTitle();
 				    }while(optionInt!=3);
-					showMenu=1;
 					break;
 			case 7 : do{
 						printf("____________________________________________________________________\n");
@@ -406,7 +377,7 @@ int main(){
 						printf("|__________________________________________________________________|\n");
 						printf("\noption : ");
 						gets(option);
-						optionInt = strtol(option, NULL, 10);
+						optionInt = atoi(option);
 						system("CLS");
 						//Display Number Of Task***********************************
 						if(optionInt==1){
@@ -420,7 +391,9 @@ int main(){
 						if(optionInt==3) showInCompletTask();
 						//Display Number Of Day Remaining*****************************
 						if(optionInt==4) NumberOfDaysRemaining();
-					}while(optionInt!=5) ; system("CLS"); break;
+					}while(optionInt!=5) ; 
+					system("CLS"); 
+					break;
 			case 8 : printf("**************THANKS FOR YOUR TIME *************\n"); break;
 			default: break;
 				}
