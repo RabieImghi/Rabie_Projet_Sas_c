@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-static int id=100;//global variable for identifiant task
-static int namberTask=0; //global variable for count task
+int id=100;//global variable for identifiant task
+int namberTask=0; //global variable for count task
 int showMenu=1; //global variable for test display Menu
 
 
@@ -127,7 +127,9 @@ void showTaskTrieDeadLine(){
 void showTaskTrieDeadLine2(){
 	int taskId[200];
 	for(int i=0;i<namberTask-1;i++)
-		if((task[i].deadline.day<3 )||(task[i].deadline.day==3 && task[i].deadline.hour<1)||(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
+		if((task[i].deadline.day<3 )||
+		(task[i].deadline.day==3 && task[i].deadline.hour<1)||
+		(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
 			printf("************Task Information *************\n");
 			printf("*  TASK %d IDENTIFIER  : %d\n",i,task[i].identifier);
 			printf("*  TASK %d Title       : %s\n",i,task[i].title);
