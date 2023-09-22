@@ -259,34 +259,30 @@ void SearchTaskByTitle(){
 
 //Function For Display finalized Tasks
 void showCompletTask(){
+	int compt=0;
 	printf("************Complete Task Information *************\n");
 	for(int i=0;i<namberTask;i++)
-		if(strcmp(task[i].Status,"finalized")==0){
-		printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
-		printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
-		printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
-		printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
-		printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
-		printf("******************************************\n");
-	}
+		if(strcmp(task[i].Status,"finalized")==0) compt++;
+		printf("________________________________________________\n");
+		printf("|| the number of complete tasks is : %d      ||\n",compt);
+		printf("||____________________________________________||\n");
 }
 
 //Function For Display progress/realize Tasks
 void showInCompletTask(){
+	int compt=0;
 	printf("************Incomplete Task Information *************\n");
 	for(int i=0;i<namberTask;i++)
-		if(strcmp(task[i].Status,"finalized")==1){
-		printf("*  TASK %d IDENTIFIER  : %d\n",i+1,task[i].identifier);
-		printf("*  TASK %d Title       : %s\n",i+1,task[i].title);
-		printf("*  TASK %d DESCRIPTION : %s\n",i+1,task[i].description);
-		printf("*  TASK %d STATUS : %s\n",i+1,task[i].Status);
-		printf("*  TASK %d DEADLINE    : %d DAY %d HOUR %d MINUT\n",i+1,task[i].deadline.day,task[i].deadline.hour,task[i].deadline.minut);
-		printf("******************************************\n");
-	}
+		if(strcmp(task[i].Status,"finalized")==1) compt++;
+		printf("________________________________________________\n");
+		printf("|| the number of Incomplete tasks is : %d      ||\n",compt);
+		printf("||____________________________________________||\n");
+	
 }
 
 //Function For Display Number Of Day Remaining Of Task
 void NumberOfDaysRemaining(){
+		printf("************ Number Of Day Remaining Of Task Incomplete*************\n");
 	for(int i=0;i<namberTask;i++)
 		if(strcmp(task[i].Status,"finalized")!=0){
 		printf("*  TASK %d IDENTIFIER                 : %d\n",i+1,task[i].identifier);
@@ -312,6 +308,7 @@ void menu(){
 }
 
 int main(){
+	
 	// Option For Test User Selection
 	char option[1];
 	int optionInt;
@@ -326,7 +323,7 @@ int main(){
 		switch (optionInt){
 			case 1 : newTask(); break; 
 			case 2 : newmultipleTask(); break;
-			case 3 : showMenu=0; 
+			case 3 : showMenu=0;
 					 char option[1];
 					 int optionInt;	
 					 do{
