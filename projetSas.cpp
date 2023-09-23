@@ -34,9 +34,9 @@ Task newTask(){
 	printf("Give me Deadline of the task %d : \n",namberTask+1);
 	printf("Day of task %d: ",namberTask+1);
 	scanf("%d",&task[namberTask].deadline.day);
-	printf("Hour of task %d: ",namberTask+1);
+	printf("Hour of task %d : ",namberTask+1);
 	scanf("%d",&task[namberTask].deadline.hour);
-	printf("Minut of task %d: ",namberTask+1);
+	printf("Minut of task %d : ",namberTask+1);
 	scanf("%d",&task[namberTask].deadline.minut);
 	namberTask++;
 	id++;	
@@ -72,6 +72,7 @@ void ShowTasks(){
 
 //Function display all task Trie By Alphabity
 void showTaskTrieAlphabity(){
+	if(namberTask!=0)
 	for(int i=0;i<namberTask-1;i++)
 		for(int j=i+1;j<namberTask;j++){
 			if(strcmp(task[i].title,task[j].title)>0){
@@ -112,7 +113,7 @@ void showTaskTrieDeadLine(){
 void showTaskTrieDeadLine2(){
 	int taskId[200];
 	for(int i=0;i<namberTask-1;i++)
-		if((task[i].deadline.day<3 )||(task[i].deadline.day==3 && task[i].deadline.hour<1)||(task[i].deadline.day==3 && task[i].deadline.day==0) && task[i].deadline.minut<1 ){
+		if((task[i].deadline.day<3 )||(task[i].deadline.day==3 && task[i].deadline.hour<1)||(task[i].deadline.day==3 && task[i].deadline.hour==0) && task[i].deadline.minut<1 ){
 			printf("************Task Information *************\n");
 			printf("*  TASK %d IDENTIFIER  : %d\n",i,task[i].identifier);
 			printf("*  TASK %d Title       : %s\n",i,task[i].title);
@@ -133,7 +134,7 @@ void editTaskDescription(){
 	gets(fake);							
 	for(int i=0;i<namberTask;i++){							
 		if(task[i].identifier==tasknumEdit){								
-			printf("Give me new description");								
+			printf("Give me new description : ");								
 			gets(desciption);								
 			strcpy(task[i].description, desciption);
 		}														
@@ -152,13 +153,13 @@ void editTaskStatus(){
 		if(task[i].identifier==tasknumEdit){								
 			printf("Give me new Status (0 for 'a realize' // 1 for 'in progress' // 2 for 'finalized') ");								
 			gets(Status);
-			if(strtol(Status,NULL,10)==0)
+			if(atoi(Status)==0)
 				strcpy(task[i].Status, "realize");
-			else if(strtol(Status,NULL,10)==1)
+			else if(atoi(Status)==1)
 				strcpy(task[i].Status, "in progress");
-			else if(strtol(Status,NULL,10)==2)							
+			else if(atoi(Status)==2)							
 				strcpy(task[i].Status, "finalized");
-			else printf("INCORRECT SELECTION");
+			else printf("INCORRECT SELECTION\n");
 		}														
 	}												
 }
@@ -173,14 +174,15 @@ void editTaskDeadLine(){
 	gets(fake);							
 	for(int i=0;i<namberTask;i++){							
 		if(task[i].identifier==tasknumEdit){								
-			printf("Give me new DeadLine : \n");								
+				printf("Give me new DeadLine : \n");								
 				printf("Day of task : ");
 				scanf("%d",&task[i].deadline.day);
 				printf("Hour of task : ");
 				scanf("%d",&task[i].deadline.hour);
 				printf("Minut of task : ");
 				scanf("%d",&task[i].deadline.minut);
-		}														
+		}
+		break;														
 	}
 }
 
